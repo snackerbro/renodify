@@ -1,0 +1,40 @@
+/* App-level layer on top of the Renodify design system.
+   design-system.css + site.css are imported in app/layout.tsx before this. */
+
+:root {
+  /* Danger tokens — the handoff used literals for destructive UI; define
+     them properly here so .btn-danger / .icon-btn--danger / .danger-note
+     resolve via tokens. */
+  --rdf-danger: #c0392b;
+  --rdf-danger-dark: #8c2c1d;
+  --rdf-danger-soft: #fdecea;
+  --rdf-danger-border: #f3c6bf;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Keep horizontal overflow in check on small screens without clipping
+   sticky elements. */
+body {
+  overflow-x: hidden;
+}
+
+/* Visually-hidden utility for accessible labels. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Generic content section spacing reused by simpler pages. */
+.stack-lg > * + * {
+  margin-top: 24px;
+}

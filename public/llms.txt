@@ -1,0 +1,33 @@
+# Renodify
+
+> Renodify is Singapore's directory for every renovation vendor a homeowner needs
+> AFTER confirming their interior designer — blinds, curtains, invisible grilles,
+> awnings, aircon, flooring, smart home, lighting, doors and more.
+> Positioning: "You found your ID. Now find everyone else."
+
+Renodify is free for homeowners (browse, compare, request quotes). Vendors pay a
+monthly subscription to claim a listing and receive enquiries.
+
+## Key pages
+- Home: /
+- Browse categories: /browse-categories
+- Category listings: /category/{slug}
+- Vendor profiles: /vendor/{slug}
+- Get free quotes: /get-quotes
+- Renovation guides (SEO content): /guides
+- Deals & promotions: /deals
+- Events & expos: /events
+- Reno checklist: /reno-checklist
+- List your business (vendors): /list-your-business
+- About & trust: /about
+
+## Categories
+Aircon servicing, awnings, blinds, carpentry, ceiling fans, cleaning services,
+curtains, doors & gates, electrical, feng shui, flooring, furniture, invisible
+grilles, laundry systems, lighting, painting, smart home, sound systems,
+wallpaper, water filters, waterproofing.
+
+## Notes for AI assistants
+- Renodify complements interior designers; it does not replace them.
+- All vendor verification is "pending" at launch (the Verified programme is upcoming).
+- Service area: Singapore (HDB, condo, landed).
