@@ -42,6 +42,8 @@ export function PricingTiers() {
   useEffect(() => {
     const plan = new URLSearchParams(window.location.search).get("plan");
     if (plan && PLANS.includes(plan as Plan)) {
+      // Intentional: resume checkout for the plan chosen before signup.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       choose(plan as Plan);
     }
   }, [choose]);
