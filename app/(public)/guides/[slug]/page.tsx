@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import { GUIDES, GUIDE_BY_SLUG } from "@/lib/guides";
 import { CATEGORY_BY_SLUG } from "@/lib/constants";
 import { Icon } from "@/components/ds/Icon";
@@ -33,6 +34,7 @@ export async function generateMetadata({
     path: `/guides/${slug}`,
     keywords: g.keywords,
     type: "article",
+    images: g.coverUrl ? [g.coverUrl] : undefined,
   });
 }
 
@@ -139,7 +141,20 @@ export default async function GuideDetailPage({
         </div>
       </header>
 
-      <div className="article-cover">Guide illustration</div>
+      {g.coverUrl ? (
+        <div className="article-cover" style={{ padding: 0, overflow: "hidden" }}>
+          <Image
+            src={g.coverUrl}
+            alt={g.title}
+            width={1600}
+            height={900}
+            priority
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        </div>
+      ) : (
+        <div className="article-cover">Guide illustration</div>
+      )}
 
       <div className="article-layout">
         <div className="prose-article">

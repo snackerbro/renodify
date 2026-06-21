@@ -31,6 +31,7 @@ export interface Guide {
   faq: { q: string; a: string }[];
   relatedSlugs: string[];
   featured?: boolean;
+  coverUrl?: string;
 }
 
 export const GUIDES: Guide[] = [
@@ -49,6 +50,8 @@ export const GUIDES: Guide[] = [
     authorBio: "The Renodify team writes practical, Singapore-specific renovation guides for homeowners.",
     readMins: 6,
     featured: true,
+    coverUrl:
+      "https://slsjihcxunpnzduamthp.supabase.co/storage/v1/object/public/site-images/guides/after-your-id-what-to-sort-next.jpg",
     takeaways: [
       "Many finishings — blinds, grilles, smart home — are outside a standard ID scope.",
       "Book site-measured items (blinds, grilles, curtains) only after carpentry is up.",

@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { GUIDES, getFeaturedGuide } from "@/lib/guides";
 import { Icon } from "@/components/ds/Icon";
@@ -33,7 +34,19 @@ export default function GuidesPage() {
         </div>
 
         <Link href={`/guides/${featured.slug}`} className="guide-featured" style={{ marginTop: 8 }}>
-          <div className="cover">Featured guide</div>
+          {featured.coverUrl ? (
+            <div className="cover" style={{ padding: 0, overflow: "hidden" }}>
+              <Image
+                src={featured.coverUrl}
+                alt={featured.title}
+                width={800}
+                height={450}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            </div>
+          ) : (
+            <div className="cover">Featured guide</div>
+          )}
           <div style={{ padding: "22px 24px" }}>
             <span className="eyebrow" style={{ color: "var(--rdf-accent-dark)" }}>
               Start here
