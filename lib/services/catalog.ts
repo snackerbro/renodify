@@ -2,8 +2,9 @@ import "server-only";
 import { createClient } from "@/lib/supabase/server";
 import { hasSupabaseEnv } from "@/lib/supabase/env";
 import { CATEGORIES } from "@/lib/constants";
-import { SAMPLE_VENDORS, SAMPLE_EVENTS } from "@/lib/sample-data";
-import type { Category, Vendor, VendorDetail, VendorEvent } from "@/lib/types";
+import { SAMPLE_VENDORS } from "@/lib/sample-data";
+import { EVENTS_SORTED, EVENT_BY_SLUG } from "@/lib/events";
+import type { Category, Vendor, VendorDetail } from "@/lib/types";
 import {
   mapDeal,
   mapEvent,
@@ -137,23 +138,16 @@ export async function getAllVendorSlugs(): Promise<string[]> {
   }
 }
 
-export interface SiteEvent extends VendorEvent {
-  slug: string;
-  description: string;
-  vendorName?: string;
+// Events are curated editorial content (see lib/events.ts), with images hosted
+// in our Supabase Storage. Re-exported here so existing imports keep working.
+export type { SiteEvent } from "@/lib/events";
+
+export async function getEvents() {
+  return EVENTS_SORTED;
 }
 
-export async function getEvents(): Promise<SiteEvent[]> {
-  // Events list is small; sample data is sufficient until the DB is seeded.
-  return SAMPLE_EVENTS.map((e) => ({
-    ...e,
-    vendorName: SAMPLE_VENDORS.find((v) => v.slug === e.vendorId)?.name,
-  }));
-}
-
-export async function getEventBySlug(slug: string): Promise<SiteEvent | null> {
-  const events = await getEvents();
-  return events.find((e) => e.slug === slug) ?? null;
+export async function getEventBySlug(slug: string) {
+  return EVENT_BY_SLUG[slug] ?? null;
 }
 
 export interface DealItem {
