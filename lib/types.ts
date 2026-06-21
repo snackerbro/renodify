@@ -94,6 +94,7 @@ export interface Vendor {
   category: string;
   areas: string[];
   propertyTypes: PropertyType[];
+  website?: string | null;
   logoUrl?: string | null;
   coverUrl?: string | null;
   whatsapp?: string;

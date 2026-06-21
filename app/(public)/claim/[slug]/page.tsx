@@ -7,6 +7,7 @@ import { ClaimButton } from "@/components/vendor/ClaimButton";
 import { ButtonLink } from "@/components/ds/Button";
 import { Icon } from "@/components/ds/Icon";
 import { pageMeta } from "@/lib/seo";
+import { hostFromUrl, emailMatchesVendorDomain } from "@/lib/domain";
 
 export const metadata: Metadata = {
   ...pageMeta({ title: "Claim your business", path: "/claim" }),
@@ -30,6 +31,9 @@ export default async function ClaimPage({
 
   const profile = await getCurrentProfile();
   const alreadyClaimed = !vendor.unclaimed && vendor.ownerId && vendor.ownerId !== profile?.id;
+  const vendorHost = hostFromUrl(vendor.website);
+  const emailOk = profile ? emailMatchesVendorDomain(profile.email, vendor.website) : false;
+  const claimUrl = `/claim/${slug}`;
 
   return (
     <div className="container narrow" style={{ padding: "32px 20px 64px" }}>
@@ -47,9 +51,14 @@ export default async function ClaimPage({
             <Icon name="shieldCheck" size={18} color="var(--rdf-success)" />
             <span>This listing has already been claimed. If it&apos;s yours, contact us.</span>
           </div>
+        ) : !vendorHost ? (
+          <div className="note-row" style={{ marginTop: 20 }}>
+            <Icon name="shield" size={18} color="var(--rdf-text-secondary)" />
+            <span>This listing has no website on file, so it can&apos;t be self-claimed yet. Contact us to verify ownership.</span>
+          </div>
         ) : (
           <>
-            <div className="svc-card__feats" style={{ margin: "20px 0 24px", gap: 12 }}>
+            <div className="svc-card__feats" style={{ margin: "20px 0 20px", gap: 12 }}>
               {BENEFITS.map((x) => (
                 <span className="svc-card__feat" key={x.t} style={{ fontSize: 14.5 }}>
                   <Icon name={x.icon} size={16} />
@@ -60,23 +69,41 @@ export default async function ClaimPage({
               ))}
             </div>
 
-            {profile ? (
+            {/* Verification requirement */}
+            <div className="note-row" style={{ marginBottom: 20 }}>
+              <Icon name="lock" size={18} color="var(--rdf-primary)" />
+              <span style={{ fontSize: 14 }}>
+                To prove ownership, claim with a company email at{" "}
+                <strong>@{vendorHost}</strong>. We email a one-time code to verify it.
+              </span>
+            </div>
+
+            {profile && emailOk ? (
               <ClaimButton slug={slug} />
+            ) : profile && !emailOk ? (
+              <div>
+                <div className="danger-note" style={{ marginBottom: 14 }}>
+                  <Icon name="shield" size={18} />
+                  <span>
+                    You&apos;re signed in as <strong>{profile.email}</strong>, which isn&apos;t a
+                    @{vendorHost} address. Sign in with your company email to claim this listing.
+                  </span>
+                </div>
+                <ButtonLink href={`/login?next=${encodeURIComponent(claimUrl)}`} variant="primary">
+                  Sign in with @{vendorHost} email
+                </ButtonLink>
+              </div>
             ) : (
-              <div className="rdf-stack" style={{ gap: 10, maxWidth: 360 }}>
+              <div className="rdf-stack" style={{ gap: 10, maxWidth: 380 }}>
                 <ButtonLink
-                  href={`/register?role=vendor&next=${encodeURIComponent(`/claim/${slug}`)}`}
+                  href={`/register?role=vendor&next=${encodeURIComponent(claimUrl)}`}
                   variant="primary"
                   size="lg"
                   block
                 >
-                  Create a vendor account to claim
+                  Verify with my @{vendorHost} email
                 </ButtonLink>
-                <ButtonLink
-                  href={`/login?next=${encodeURIComponent(`/claim/${slug}`)}`}
-                  variant="secondary"
-                  block
-                >
+                <ButtonLink href={`/login?next=${encodeURIComponent(claimUrl)}`} variant="secondary" block>
                   I already have an account
                 </ButtonLink>
               </div>

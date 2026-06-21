@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { hasSupabaseEnv } from "@/lib/supabase/env";
+import { emailMatchesVendorDomain, hostFromUrl } from "@/lib/domain";
 
 /**
  * Claim an unclaimed vendor listing for the signed-in user.
@@ -25,13 +26,32 @@ export async function POST(request: Request) {
 
   const { data: vendor, error } = await admin
     .from("vendors")
-    .select("id, owner_id, unclaimed")
+    .select("id, owner_id, unclaimed, website, name")
     .eq("slug", slug)
     .single();
   if (error || !vendor) return NextResponse.json({ error: "Listing not found" }, { status: 404 });
 
   if (vendor.owner_id && vendor.owner_id !== user.id) {
     return NextResponse.json({ error: "This listing is already claimed." }, { status: 409 });
+  }
+
+  // Ownership verification: the signed-in email's domain must match the
+  // listing's website domain (the OTP already proved control of that inbox).
+  const vendorHost = hostFromUrl(vendor.website);
+  if (!vendorHost) {
+    return NextResponse.json(
+      { error: "This listing can't be self-claimed yet. Contact us to verify ownership." },
+      { status: 403 },
+    );
+  }
+  if (!emailMatchesVendorDomain(user.email, vendor.website)) {
+    return NextResponse.json(
+      {
+        error: `To claim ${vendor.name}, sign in with a company email at @${vendorHost} (we emailed a code to verify it).`,
+        requiredDomain: vendorHost,
+      },
+      { status: 403 },
+    );
   }
 
   // Link the listing to this user.

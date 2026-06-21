@@ -21,6 +21,7 @@ export function mapVendor(r: any): Vendor {
     category: r.category,
     areas: r.areas ?? [],
     propertyTypes: r.property_types ?? [],
+    website: r.website ?? undefined,
     logoUrl: r.logo_url ?? null,
     coverUrl: r.cover_url ?? null,
     whatsapp: r.whatsapp ?? undefined,
