@@ -27,9 +27,9 @@ from v;
 
 with v as (select id from public.vendors where slug = 'shadeworks-blinds')
 insert into public.services (vendor_id, kind, icon, name, price, unit, description, features)
-select v.id, 'Service', 'sliders', 'Site measurement & consultation', 'Free', 'per visit', 'On-site measurement and recommendation.', '{Same-week appointment,Islandwide,No obligation}' from v
+select v.id, 'Service', 'sliders', 'Site measurement & consultation', 'Free', 'per visit', 'On-site measurement and recommendation.', '{Same-week appointment,Islandwide,No obligation}'::text[] from v
 union all
-select v.id, 'Product', 'tag', 'Motorised roller blinds', 'S$280', 'per window', 'Supply and install with warranty.', '{2-year warranty,Battery or wired}' from v;
+select v.id, 'Product', 'tag', 'Motorised roller blinds', 'S$280', 'per window', 'Supply and install with warranty.', '{2-year warranty,Battery or wired}'::text[] from v;
 
 with v as (select id from public.vendors where slug = 'shadeworks-blinds')
 insert into public.reviews (vendor_id, author_name, rating, text)
