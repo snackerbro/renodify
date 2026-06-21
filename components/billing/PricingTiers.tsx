@@ -1,16 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { PLAN_TIERS } from "@/lib/constants";
 import { Button } from "@/components/ds/Button";
 import { Icon } from "@/components/ds/Icon";
 import type { Plan } from "@/lib/types";
 
+const PLANS: Plan[] = ["basic", "silver", "gold"];
+
 export function PricingTiers() {
   const [loading, setLoading] = useState<Plan | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  async function choose(plan: Plan) {
+  const choose = useCallback(async (plan: Plan) => {
     setError(null);
     setLoading(plan);
     try {
@@ -21,19 +23,28 @@ export function PricingTiers() {
       });
       const data = await res.json();
       if (res.status === 401) {
-        window.location.assign("/register?role=vendor");
+        // Not signed in — register, then come back here and resume checkout.
+        const next = encodeURIComponent(`/list-your-business?plan=${plan}`);
+        window.location.assign(`/register?role=vendor&next=${next}`);
         return;
       }
       if (!res.ok) throw new Error(data.error || "Checkout unavailable");
       if (data.url) {
-        window.location.assign(data.url);
+        window.location.assign(data.url); // -> Stripe Checkout
       }
     } catch (e) {
       setError(e instanceof Error ? e.message : "Checkout unavailable");
-    } finally {
       setLoading(null);
     }
-  }
+  }, []);
+
+  // Resume checkout after signup: /list-your-business?plan=<plan> auto-starts it.
+  useEffect(() => {
+    const plan = new URLSearchParams(window.location.search).get("plan");
+    if (plan && PLANS.includes(plan as Plan)) {
+      choose(plan as Plan);
+    }
+  }, [choose]);
 
   return (
     <>
