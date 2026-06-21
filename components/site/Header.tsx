@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Logo } from "./Logo";
 import { ButtonLink } from "@/components/ds/Button";
-import { Icon } from "@/components/ds/Icon";
+import { HeaderAuth } from "./HeaderAuth";
 
 const NAV = [
   { href: "/browse-categories", label: "Browse" },
@@ -32,9 +32,7 @@ export function Header() {
           <Link href="/list-your-business" className="site-header__list">
             List your business
           </Link>
-          <ButtonLink href="/login" variant="ghost" className="site-header__login" aria-label="Log in">
-            <Icon name="user" size={20} />
-          </ButtonLink>
+          <HeaderAuth />
           <ButtonLink href="/get-quotes" variant="primary" size="sm">
             Get Quotes
           </ButtonLink>
