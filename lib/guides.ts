@@ -126,6 +126,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "motorised-blinds-hdb",
+    coverUrl:
+      "https://slsjihcxunpnzduamthp.supabase.co/storage/v1/object/public/site-images/guides/motorised-blinds-hdb.jpg",
     title: "Motorised blinds for HDB flats: a 2026 buyer's guide",
     metaDescription:
       "Everything Singapore HDB owners need to know about motorised blinds — power options, costs, battery vs wired, and how to plan installation around your renovation.",
@@ -205,6 +207,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "invisible-grilles-condo",
+    coverUrl:
+      "https://slsjihcxunpnzduamthp.supabase.co/storage/v1/object/public/site-images/guides/invisible-grilles-condo.jpg",
     title: "Invisible grilles for condos: safety, rules and cost",
     metaDescription:
       "A guide to invisible grilles for Singapore condos — MCST approval, cable spacing, child safety, materials and typical pricing per foot.",
@@ -276,6 +280,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "aircon-btu-sizing",
+    coverUrl:
+      "https://slsjihcxunpnzduamthp.supabase.co/storage/v1/object/public/site-images/guides/aircon-btu-sizing.jpg",
     title: "Aircon BTU sizing for Singapore homes",
     metaDescription:
       "How to size your aircon correctly in Singapore — BTU per room, system types, and why oversizing wastes money. A practical sizing guide for HDB and condo.",
@@ -337,6 +343,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "flooring-vinyl-tile-spc",
+    coverUrl:
+      "https://slsjihcxunpnzduamthp.supabase.co/storage/v1/object/public/site-images/guides/flooring-vinyl-tile-spc.jpg",
     title: "Flooring in Singapore: vinyl vs tile vs SPC",
     metaDescription:
       "Compare vinyl, tile and SPC flooring for Singapore homes — water resistance, comfort, cost and resale. Pick the right floor for HDB and condo renovations.",
@@ -394,6 +402,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "when-to-waterproof",
+    coverUrl:
+      "https://slsjihcxunpnzduamthp.supabase.co/storage/v1/object/public/site-images/guides/when-to-waterproof.jpg",
     title: "When to waterproof during a renovation",
     metaDescription:
       "Waterproofing timing matters. Learn when to waterproof bathrooms, kitchens and balconies during a Singapore renovation — and why redoing it later is costly.",
@@ -453,6 +463,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "post-reno-cleaning",
+    coverUrl:
+      "https://slsjihcxunpnzduamthp.supabase.co/storage/v1/object/public/site-images/guides/post-reno-cleaning.jpg",
     title: "Post-renovation cleaning: what to expect",
     metaDescription:
       "A guide to post-renovation cleaning in Singapore — what's included, cement and paint residue, timing before move-in, and typical costs by flat size.",
