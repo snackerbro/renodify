@@ -116,7 +116,7 @@ export default async function VendorProfilePage({
                 Claim this listing to reply to enquiries and manage your profile.
               </div>
             </div>
-            <ButtonLink href="/list-your-business" variant="solid" size="sm">
+            <ButtonLink href={`/claim/${v.slug}`} variant="solid" size="sm">
               Claim
             </ButtonLink>
           </div>

@@ -91,7 +91,8 @@ export function AuthForm({ mode, defaultRole = "customer" }: { mode: Mode; defau
           else dest = "/customer-dashboard";
         }
       }
-      router.push(dest);
+      const next = new URLSearchParams(window.location.search).get("next");
+      router.push(next || dest);
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Invalid or expired code");
