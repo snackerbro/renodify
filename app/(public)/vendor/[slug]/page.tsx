@@ -9,7 +9,7 @@ import { Rating } from "@/components/ds/Rating";
 import { Badge, VerifiedPendingBadge } from "@/components/ds/Badge";
 import { ButtonLink } from "@/components/ds/Button";
 import { Icon } from "@/components/ds/Icon";
-import { DAYS } from "@/lib/constants";
+import { DAYS, DEFAULT_COVER_URL } from "@/lib/constants";
 import { pageMeta, breadcrumbJsonLd, localBusinessJsonLd } from "@/lib/seo";
 import { JsonLd } from "@/components/JsonLd";
 import type { Outlet } from "@/lib/types";
@@ -93,15 +93,14 @@ export default async function VendorProfilePage({
         </Link>
       </div>
       <div className="container" style={{ marginTop: 12 }}>
-        <div
-          className="rdf-ph"
-          style={{ aspectRatio: "16/5", borderRadius: 18, overflow: "hidden" }}
-        >
-          {v.coverUrl ? (
-            <Image src={v.coverUrl} alt="" width={1180} height={370} style={{ objectFit: "cover" }} />
-          ) : (
-            "Cover photo"
-          )}
+        <div style={{ aspectRatio: "16/5", borderRadius: 18, overflow: "hidden" }}>
+          <Image
+            src={v.coverUrl || DEFAULT_COVER_URL}
+            alt=""
+            width={1180}
+            height={370}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
         </div>
       </div>
 

@@ -6,6 +6,7 @@ import { Rating } from "@/components/ds/Rating";
 import { Badge } from "@/components/ds/Badge";
 import { Icon } from "@/components/ds/Icon";
 import { ButtonLink } from "@/components/ds/Button";
+import { DEFAULT_COVER_URL } from "@/lib/constants";
 
 export function VendorCard({ vendor }: { vendor: Vendor }) {
   const href = `/vendor/${vendor.slug}`;
@@ -13,11 +14,13 @@ export function VendorCard({ vendor }: { vendor: Vendor }) {
   return (
     <article className="rdf-vendor">
       <Link href={href} className="rdf-vendor__media" aria-label={vendor.name}>
-        {vendor.coverUrl ? (
-          <Image src={vendor.coverUrl} alt="" width={480} height={300} />
-        ) : (
-          <span className="rdf-ph">{vendor.category}</span>
-        )}
+        <Image
+          src={vendor.coverUrl || DEFAULT_COVER_URL}
+          alt=""
+          width={480}
+          height={300}
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        />
         <span className="rdf-vendor__media-badges">
           {vendor.deal && <Badge variant="deal">{vendor.deal}</Badge>}
           {vendor.unclaimed && <Badge variant="neutral">Unclaimed</Badge>}

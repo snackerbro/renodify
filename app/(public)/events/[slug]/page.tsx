@@ -7,7 +7,7 @@ import { formatEventDate } from "@/lib/events";
 import { Icon } from "@/components/ds/Icon";
 import { ButtonLink } from "@/components/ds/Button";
 import { pageMeta, breadcrumbJsonLd } from "@/lib/seo";
-import { SITE_URL, SITE_NAME } from "@/lib/constants";
+import { SITE_URL, SITE_NAME, DEFAULT_COVER_URL } from "@/lib/constants";
 import { JsonLd } from "@/components/JsonLd";
 
 export async function generateStaticParams() {
@@ -125,27 +125,18 @@ export default async function EventDetailPage({
       </section>
 
       <div className="container" style={{ padding: "30px 20px 48px" }}>
-        {e.imageUrl ? (
-          <div
-            style={{
-              aspectRatio: "16/7",
-              borderRadius: 16,
-              overflow: "hidden",
-              marginBottom: 28,
-            }}
-          >
-            <Image
-              src={e.imageUrl}
-              alt={e.title}
-              width={1200}
-              height={525}
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              priority
-            />
-          </div>
-        ) : (
-          <div className="map-ph" style={{ marginBottom: 28 }}>Event</div>
-        )}
+        <div
+          style={{ aspectRatio: "16/7", borderRadius: 16, overflow: "hidden", marginBottom: 28 }}
+        >
+          <Image
+            src={e.imageUrl || DEFAULT_COVER_URL}
+            alt={e.title}
+            width={1200}
+            height={525}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            priority
+          />
+        </div>
 
         <div className="prose" style={{ maxWidth: 760, margin: 0 }}>
           {e.address && (

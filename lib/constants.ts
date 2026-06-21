@@ -8,6 +8,10 @@ export const SITE_DESCRIPTION =
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "http://localhost:3000";
 
+// Branded fallback cover shown when a vendor/event has no cover image of its own.
+export const DEFAULT_COVER_URL =
+  "https://slsjihcxunpnzduamthp.supabase.co/storage/v1/object/public/site-images/defaults/vendor-cover.jpg";
+
 export const PROPERTY_TYPES: PropertyType[] = ["HDB", "Condo", "Landed"];
 
 export const SG_AREAS = [

@@ -6,6 +6,7 @@ import { getEvents } from "@/lib/services/catalog";
 import { formatEventDate, type SiteEvent } from "@/lib/events";
 import { Icon } from "@/components/ds/Icon";
 import { pageMeta } from "@/lib/seo";
+import { DEFAULT_COVER_URL } from "@/lib/constants";
 
 export const metadata: Metadata = pageMeta({
   title: "Renovation events, expos & fairs in Singapore",
@@ -43,18 +44,14 @@ export default async function EventsPage() {
               <strong>{fd.day}</strong>
               {fd.mon}
             </span>
-            {featured.imageUrl ? (
-              <Image
-                src={featured.imageUrl}
-                alt={featured.title}
-                width={800}
-                height={450}
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                priority
-              />
-            ) : (
-              <span className="event-feature__ph">Event</span>
-            )}
+            <Image
+              src={featured.imageUrl || DEFAULT_COVER_URL}
+              alt={featured.title}
+              width={800}
+              height={450}
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              priority
+            />
           </div>
           <div className="event-feature__body">
             <span className="event-tag">{featured.type}</span>
@@ -86,15 +83,13 @@ export default async function EventsPage() {
                   {d.mon}
                 </span>
                 <span className="event-card__type">{e.type}</span>
-                {e.imageUrl && (
-                  <Image
-                    src={e.imageUrl}
-                    alt={e.title}
-                    width={480}
-                    height={300}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  />
-                )}
+                <Image
+                  src={e.imageUrl || DEFAULT_COVER_URL}
+                  alt={e.title}
+                  width={480}
+                  height={300}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
               </div>
               <div className="event-card__body">
                 <h3>{e.title}</h3>
