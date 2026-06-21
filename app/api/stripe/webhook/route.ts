@@ -6,6 +6,15 @@ import type { Plan } from "@/lib/types";
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || "";
 
+// On recent Stripe API versions current_period_end moved from the subscription
+// to its items, so read item-level first and fall back to the top-level field.
+function renewsOnFromSub(sub: Stripe.Subscription): string | null {
+  const cpe =
+    (sub as unknown as { current_period_end?: number }).current_period_end ??
+    sub.items?.data?.[0]?.current_period_end;
+  return cpe ? new Date(cpe * 1000).toISOString().slice(0, 10) : null;
+}
+
 // Stripe needs the raw body to verify the signature.
 export async function POST(request: Request) {
   if (!hasStripeEnv || !webhookSecret) {
@@ -40,11 +49,7 @@ export async function POST(request: Request) {
             stripeCustomerId: (s.customer as string) || "",
             stripeSubscriptionId: sub.id,
             status: sub.status,
-            renewsOn: new Date(
-              (sub as unknown as { current_period_end: number }).current_period_end * 1000,
-            )
-              .toISOString()
-              .slice(0, 10),
+            renewsOn: renewsOnFromSub(sub),
           });
         }
         break;
@@ -61,11 +66,7 @@ export async function POST(request: Request) {
             stripeCustomerId: (sub.customer as string) || "",
             stripeSubscriptionId: sub.id,
             status: sub.status,
-            renewsOn: new Date(
-              (sub as unknown as { current_period_end: number }).current_period_end * 1000,
-            )
-              .toISOString()
-              .slice(0, 10),
+            renewsOn: renewsOnFromSub(sub),
           });
         }
         break;

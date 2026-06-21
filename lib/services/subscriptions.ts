@@ -51,7 +51,7 @@ export async function upsertSubscriptionFromStripe(args: {
   stripeCustomerId: string;
   stripeSubscriptionId: string;
   status: string;
-  renewsOn: string;
+  renewsOn: string | null;
 }) {
   const admin = createAdminClient();
   const included = PLAN_BY_KEY[args.plan]?.enquiriesPerMonth ?? 0;
