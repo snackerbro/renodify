@@ -18,6 +18,9 @@ export const metadata: Metadata = pageMeta({
   path: "/",
 });
 
+// Refresh homepage vendor counts/popular hourly without a redeploy.
+export const revalidate = 3600;
+
 const STEPS = [
   {
     n: 1,

@@ -38,25 +38,31 @@ export function VendorCard({ vendor }: { vendor: Vendor }) {
           </span>
         </div>
 
-        <div className="rdf-vendor__meta">
-          <Rating value={vendor.ratingAvg} count={vendor.reviewCount} size={14} />
-        </div>
+        {vendor.reviewCount > 0 && (
+          <div className="rdf-vendor__meta">
+            <Rating value={vendor.ratingAvg} count={vendor.reviewCount} size={14} />
+          </div>
+        )}
 
-        <div className="rdf-vendor__meta">
-          <span className="rdf-vendor__meta-item">
-            <Icon name="building" size={15} /> {vendor.yearsInBusiness} yrs
-          </span>
-          {typeof vendor.responseRate === "number" && (
-            <span className="rdf-vendor__meta-item">
-              <Icon name="message" size={15} /> {vendor.responseRate}% reply
-            </span>
-          )}
-          {vendor.priceFrom && (
-            <span className="rdf-vendor__meta-item">
-              <Icon name="tag" size={15} /> from {vendor.priceFrom}
-            </span>
-          )}
-        </div>
+        {(vendor.yearsInBusiness > 0 || vendor.responseRate || vendor.priceFrom) && (
+          <div className="rdf-vendor__meta">
+            {vendor.yearsInBusiness > 0 && (
+              <span className="rdf-vendor__meta-item">
+                <Icon name="building" size={15} /> {vendor.yearsInBusiness} yrs
+              </span>
+            )}
+            {typeof vendor.responseRate === "number" && (
+              <span className="rdf-vendor__meta-item">
+                <Icon name="message" size={15} /> {vendor.responseRate}% reply
+              </span>
+            )}
+            {vendor.priceFrom && (
+              <span className="rdf-vendor__meta-item">
+                <Icon name="tag" size={15} /> from {vendor.priceFrom}
+              </span>
+            )}
+          </div>
+        )}
 
         <div className="rdf-vendor__tags">
           {vendor.propertyTypes.map((p) => (

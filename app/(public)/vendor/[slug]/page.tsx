@@ -136,32 +136,32 @@ export default async function VendorProfilePage({
                   {v.category} · {v.areas.join(", ")}
                 </div>
                 <div style={{ display: "flex", gap: 10, alignItems: "center", marginTop: 8, flexWrap: "wrap" }}>
-                  <Rating value={v.ratingAvg} count={v.reviewCount} />
+                  {v.reviewCount > 0 && <Rating value={v.ratingAvg} count={v.reviewCount} />}
                   <VerifiedPendingBadge />
                   {v.deal && <Badge variant="deal">{v.deal}</Badge>}
                 </div>
               </div>
             </div>
 
-            {/* Trust meta */}
-            <div className="stat-grid" style={{ marginTop: 20 }}>
-              <div className="stat">
-                <div className="stat__v">{v.yearsInBusiness}</div>
-                <div className="stat__l">Years in business</div>
-              </div>
-              <div className="stat">
-                <div className="stat__v">{v.responseRate ?? "—"}%</div>
-                <div className="stat__l">Response rate</div>
-              </div>
-              <div className="stat">
-                <div className="stat__v" style={{ fontSize: 20 }}>{v.priceFrom ?? "—"}</div>
-                <div className="stat__l">From price</div>
-              </div>
-              <div className="stat">
-                <div className="stat__v">{v.reviewCount}</div>
-                <div className="stat__l">Reviews</div>
-              </div>
-            </div>
+            {/* Trust meta — only show stats that are known (unclaimed leads have none yet) */}
+            {(() => {
+              const stats: { v: string; l: string }[] = [];
+              if (v.yearsInBusiness > 0) stats.push({ v: String(v.yearsInBusiness), l: "Years in business" });
+              if (typeof v.responseRate === "number") stats.push({ v: `${v.responseRate}%`, l: "Response rate" });
+              if (v.priceFrom) stats.push({ v: v.priceFrom, l: "From price" });
+              if (v.reviewCount > 0) stats.push({ v: String(v.reviewCount), l: "Reviews" });
+              if (!stats.length) return null;
+              return (
+                <div className="stat-grid" style={{ marginTop: 20 }}>
+                  {stats.map((s) => (
+                    <div className="stat" key={s.l}>
+                      <div className="stat__v" style={{ fontSize: s.v.length > 5 ? 20 : undefined }}>{s.v}</div>
+                      <div className="stat__l">{s.l}</div>
+                    </div>
+                  ))}
+                </div>
+              );
+            })()}
 
             {v.about && (
               <p style={{ marginTop: 20, color: "var(--rdf-text-secondary)", lineHeight: 1.6 }}>
