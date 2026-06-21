@@ -1,6 +1,16 @@
-// A template re-mounts on every navigation (unlike layout), so the entrance
-// animation replays page-to-page. Wraps only the page content; the header,
-// footer and bottom nav live in the layout and stay put.
+"use client";
+
+import { usePathname } from "next/navigation";
+
+// Keying the wrapper by pathname forces a fresh DOM node on every navigation,
+// so the CSS entrance animation reliably replays page-to-page (including
+// list → detail routes like /events → /events/[slug]). Header/footer live in
+// the layout and stay put.
 export default function Template({ children }: { children: React.ReactNode }) {
-  return <div className="page-transition">{children}</div>;
+  const pathname = usePathname();
+  return (
+    <div key={pathname} className="page-transition">
+      {children}
+    </div>
+  );
 }
